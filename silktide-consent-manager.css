@@ -8,19 +8,20 @@
 /* --------------------------------
   Global Styles - These elements exist in the main DOM and styling is limited to positioning and animation
 -------------------------------- */
+/* https://cookiestesting.odoo.com/_custom/web.assets_frontend/website/static/src/scss/user_custom_rules.scss */
 /* Wrapper (Global) */
 #silktide-wrapper {
-              --focus: 0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 0 0 6px #ffffff;
-              --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
-              --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
-              --primaryColor: #533BE2;
-              --backgroundColor: #FFFFFF;
-              --textColor: #4B494B;
-              --backdropBackgroundColor: #00000033;
-              --backdropBackgroundBlur: 0px;
-              --cookieIconColor: #FFFFFF;
-              --cookieIconBackgroundColor: #4B494B;
-              position: fixed;
+  --focus: 0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 0 0 6px #ffffff;
+  --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
+  --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
+  --primaryColor: #533BE2;
+  --backgroundColor: #FFFFFF;
+  --textColor: #4B494B;
+  --backdropBackgroundColor: #00000033;
+  --backdropBackgroundBlur: 0px;
+  --cookieIconColor: #533BE2;
+  --cookieIconBackgroundColor: #FFFFFF;
+  position: fixed;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -31,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center
-            }
+}
 
 /* Backdrop (Global) */
 #silktide-backdrop-global {
@@ -94,8 +95,7 @@
   border-radius: 5px;
 }
 
-#silktide-wrapper .st-button--primary {
-}
+#silktide-wrapper .st-button--primary {}
 
 #silktide-wrapper .st-button--primary:hover {
   background-color: var(--backgroundColor);
@@ -214,7 +214,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  fill: var(--primaryColor); /* passed down to svg > path */
+  fill: var(--primaryColor);
+  /* passed down to svg > path */
   margin-left: auto;
   width: 48px;
   height: 48px;
@@ -311,13 +312,17 @@
 }
 
 #silktide-modal section::-webkit-scrollbar {
-  display: block; /* Force scrollbars to show */
-  width: 5px; /* Width of the scrollbar */
+  display: block;
+  /* Force scrollbars to show */
+  width: 5px;
+  /* Width of the scrollbar */
 }
 
 #silktide-modal section::-webkit-scrollbar-thumb {
-  background-color: var(--textColor); /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Rounded corners for the thumb */
+  background-color: var(--textColor);
+  /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  /* Rounded corners for the thumb */
 }
 
 #silktide-modal p {
@@ -353,7 +358,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 24px;  
+  gap: 24px;
 }
 
 /* --------------------------------
@@ -422,26 +427,26 @@
 }
 
 /* Checked Switch Styles */
-#silktide-modal .switch input:checked + .switch__pill {
+#silktide-modal .switch input:checked+.switch__pill {
   background: var(--primaryColor);
 }
 
-#silktide-modal .switch input:checked ~ .switch__dot {
+#silktide-modal .switch input:checked~.switch__dot {
   left: calc(100% - 32px);
 }
 
-#silktide-modal .switch input:checked ~ .switch__off {
+#silktide-modal .switch input:checked~.switch__off {
   right: calc(100% - 32px);
   opacity: 0;
 }
 
-#silktide-modal .switch input:checked ~ .switch__on {
+#silktide-modal .switch input:checked~.switch__on {
   right: calc(100% - 34px);
   opacity: 1;
 }
 
 /* Disabled Switch Styles */
-#silktide-modal .switch input:disabled + .switch__pill {
+#silktide-modal .switch input:disabled+.switch__pill {
   opacity: 0.65;
   cursor: not-allowed;
 }
@@ -519,6 +524,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -529,6 +535,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -540,6 +547,7 @@
     opacity: 0;
     transform: translate(-50%, calc(-50% - 20px));
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -551,6 +559,7 @@
     opacity: 0;
     transform: translate(-50%, -20px);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, 0);
@@ -562,8 +571,138 @@
     opacity: 0;
     transform: translate(0px, 20px);
   }
+
   to {
     opacity: 1;
     transform: translate(0px, 0px);
+  }
+}
+
+/* =========================================
+   MOBILE OPTIMIZATION
+   COMPACT VERSION
+========================================= */
+
+@media (max-width: 768px) {
+
+  /* MAIN BANNER POSITION */
+  #silktide-banner.bottomCenter {
+
+    left: 50% !important;
+
+    right: auto !important;
+
+    transform:
+      translate(-50%, -14px) !important;
+
+    width: calc(100% - 20px) !important;
+
+    max-width: 360px !important;
+  }
+
+  /* MAIN BANNER */
+  #silktide-banner {
+
+    width: calc(100% - 20px) !important;
+
+    max-width: 360px !important;
+
+    bottom: 10px !important;
+
+    left: 10px !important;
+
+    right: 10px !important;
+
+    margin: 0 auto !important;
+
+    border-radius: 14px !important;
+
+    padding: 11px !important;
+  }
+
+  /* CONTENT */
+  #silktide-banner p {
+
+    font-size: 11px !important;
+
+    line-height: 1.35 !important;
+
+    margin-bottom: 8px !important;
+  }
+
+  /* TITLE */
+  #silktide-banner h2,
+  #silktide-banner h3 {
+
+    font-size: 14px !important;
+
+    line-height: 1.25 !important;
+
+    margin-bottom: 6px !important;
+  }
+
+  /* BUTTON CONTAINER */
+  #silktide-banner {
+
+    gap: 6px !important;
+  }
+
+  /* BUTTONS */
+  #silktide-banner button {
+
+    min-height: 34px !important;
+
+    font-size: 11px !important;
+
+    line-height: 1.2 !important;
+
+    padding: 6px 10px !important;
+
+    border-radius: 10px !important;
+  }
+
+  /* PREFERENCES MODAL */
+  #silktide-modal {
+
+    width: calc(100% - 20px) !important;
+
+    max-width: 380px !important;
+
+    max-height: 78vh !important;
+
+    border-radius: 14px !important;
+
+    padding: 14px !important;
+  }
+
+  /* COOKIE CATEGORIES */
+  #silktide-modal .cookie-type-content {
+
+    padding: 10px 0 !important;
+  }
+
+  /* MODAL TEXT */
+  #silktide-modal p,
+  #silktide-modal li {
+
+    font-size: 11px !important;
+
+    line-height: 1.35 !important;
+  }
+
+  /* MODAL TITLES */
+  #silktide-modal h2,
+  #silktide-modal h3 {
+
+    font-size: 14px !important;
+
+    line-height: 1.25 !important;
+  }
+
+  /* TOGGLES / SWITCHES */
+  #silktide-modal label,
+  #silktide-modal .cookie-type-label {
+
+    font-size: 12px !important;
   }
 }
