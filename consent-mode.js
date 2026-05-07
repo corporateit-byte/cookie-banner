@@ -80,6 +80,6 @@ gtag('consent', 'default', {
   wait_for_update: 500
 });
 
-console.log("Timezone:", userTimezone);
-console.log("EU visitor:", isEUVisitor);
-console.log("Consent mode:", defaultConsent);
+//console.log("Timezone:", userTimezone);
+//console.log("EU visitor:", isEUVisitor);
+//console.log("Consent mode:", defaultConsent);
