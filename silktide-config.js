@@ -24,9 +24,9 @@ window.addEventListener("load", function () {
   ];
 
   // =========================================
-  // DETECT VISITOR COUNTRY
+  // COUNTRY DETECTION
   // =========================================
-  // REQUIRES CLOUDFLARE
+  // REQUIRES CLOUDFLARE COUNTRY HEADER
   // =========================================
 
   const visitorCountry =
@@ -123,6 +123,30 @@ window.addEventListener("load", function () {
   }
 
   // =========================================
+  // DISABLE CLARITY
+  // =========================================
+
+  function disableClarity() {
+
+    window.__clarity_loaded = false;
+
+    window.clarity = function () { };
+
+    // REMOVE COOKIES
+    document.cookie =
+      "_clck=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    document.cookie =
+      "_clsk=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    // REMOVE STORAGE
+    localStorage.removeItem("_clck");
+    sessionStorage.removeItem("_clsk");
+
+    //console.log("Clarity disabled");
+  }
+
+  // =========================================
   // LOAD AHREFS
   // =========================================
 
@@ -152,20 +176,46 @@ window.addEventListener("load", function () {
   }
 
   // =========================================
-  // AUTO ENABLE FOR NON-EU VISITORS
+  // DISABLE AHREFS
   // =========================================
 
-  if (!isEUVisitor) {
+  function disableAhrefs() {
+
+    window.__ahrefs_loaded = false;
+
+    //console.log("Ahrefs disabled");
+  }
+
+  // =========================================
+  // EXISTING CONSENT
+  // =========================================
+
+  const existingConsent =
+    localStorage.getItem(
+      "silktide_cookie_preferences"
+    );
+
+  // =========================================
+  // AUTO ENABLE NON-EU
+  // ONLY ON FIRST VISIT
+  // =========================================
+
+  if (!isEUVisitor && !existingConsent) {
+
+    const defaultConsent = {
+
+      necessary: true,
+
+      analytics: true,
+
+      advertising: true
+    };
 
     localStorage.setItem(
+
       "silktide_cookie_preferences",
 
-      JSON.stringify({
-
-        necessary: true,
-        analytics: true,
-        advertising: true
-      })
+      JSON.stringify(defaultConsent)
     );
 
     gtag('consent', 'update', {
@@ -186,7 +236,7 @@ window.addEventListener("load", function () {
     loadClarity();
     loadAhrefs();
 
-    //console.log("Non-EU visitor: all cookies enabled");
+    //console.log("Non-EU first visit: all cookies enabled");
   }
 
   // =========================================
@@ -228,17 +278,26 @@ window.addEventListener("load", function () {
         const consent =
           JSON.parse(consentRaw);
 
-        //console.log(
-        //"Saved consent:",
-        //  consent
-        //);
+        //console.log("Saved consent:",consent);
 
+        // ANALYTICS
         if (consent.analytics === true) {
+
           loadClarity();
+
+        } else {
+
+          disableClarity();
         }
 
+        // ADVERTISING
         if (consent.advertising === true) {
+
           loadAhrefs();
+
+        } else {
+
+          disableAhrefs();
         }
       }
 
@@ -306,9 +365,7 @@ window.addEventListener("load", function () {
                   'granted'
               });
 
-              //console.log(
-              //'Necessary cookies active'
-              // );
+              //console.log('Necessary cookies active');
             }
           },
 
@@ -360,9 +417,24 @@ window.addEventListener("load", function () {
 
               loadClarity();
 
-              //console.log(
-              //'Analytics consent granted'
-              //      );
+              // SAVE CONSENT
+              const consent =
+                JSON.parse(
+                  localStorage.getItem(
+                    "silktide_cookie_preferences"
+                  ) || "{}"
+                );
+
+              consent.analytics = true;
+
+              localStorage.setItem(
+
+                "silktide_cookie_preferences",
+
+                JSON.stringify(consent)
+              );
+
+              //console.log('Analytics consent granted');
             },
 
             onReject: function () {
@@ -373,9 +445,26 @@ window.addEventListener("load", function () {
                   'denied'
               });
 
-              //console.log(
-              //'Analytics consent denied'
-              //        );
+              disableClarity();
+
+              // SAVE CONSENT
+              const consent =
+                JSON.parse(
+                  localStorage.getItem(
+                    "silktide_cookie_preferences"
+                  ) || "{}"
+                );
+
+              consent.analytics = false;
+
+              localStorage.setItem(
+
+                "silktide_cookie_preferences",
+
+                JSON.stringify(consent)
+              );
+
+              //console.log('Analytics consent denied');
             }
           },
 
@@ -427,9 +516,24 @@ window.addEventListener("load", function () {
 
               loadAhrefs();
 
-              //console.log(
-              //'Advertising consent granted'
-              //      );
+              // SAVE CONSENT
+              const consent =
+                JSON.parse(
+                  localStorage.getItem(
+                    "silktide_cookie_preferences"
+                  ) || "{}"
+                );
+
+              consent.advertising = true;
+
+              localStorage.setItem(
+
+                "silktide_cookie_preferences",
+
+                JSON.stringify(consent)
+              );
+
+              //console.log('Advertising consent granted');
             },
 
             onReject: function () {
@@ -446,9 +550,26 @@ window.addEventListener("load", function () {
                   'denied'
               });
 
-              //console.log(
-              //'Advertising consent denied'
-              //        );
+              disableAhrefs();
+
+              // SAVE CONSENT
+              const consent =
+                JSON.parse(
+                  localStorage.getItem(
+                    "silktide_cookie_preferences"
+                  ) || "{}"
+                );
+
+              consent.advertising = false;
+
+              localStorage.setItem(
+
+                "silktide_cookie_preferences",
+
+                JSON.stringify(consent)
+              );
+
+              //console.log('Advertising consent denied');
             }
           }
         ],
